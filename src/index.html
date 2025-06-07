@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<head>
+  <title>C-PAC Docs</title>
+
+  <link rel="icon" href="assets/img/cpac.png">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <script type="module" src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+</head>
+
+<body>
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+
+    
+
+    <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+         <img src="assets/img/logo.png" alt="">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="active">C-PAC</a></li>
+          <li><a href="pages/about.html">About</a></li>
+          <li><a href="pages/neuroimaging.html">Neuroimaging</a></li>
+          <li><a href="pages/pipelines.html">Pipelines</a></li>
+          <li><a href="pages/use.html">How to Use</a></li>
+          <li><a href="pages/tutorials.html">Tutorials</a></li>
+          <li><a href="pages/projects.html">Projects</a></li>
+          <li><a href="pages/support.html">User Support</a></li>
+          <li><a href="pages/appendix.html">Appendix</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+  <div style="background-color: #fff3cd; color: #856404; text-align: center; padding: 0.5rem; font-weight: 500;">
+    this page is under construction. to suggest content-related edits, please open a
+    <a href="https://github.com/FCP-INDI/cpac-docs/blob/main/CONTRIBUTING.md#writing-a-content-related-pr:~:text=Appendix-,Writing%20a%20Content%2DRelated%20PR,-To%20contribute%20content"
+       style="color: #0c5460; text-decoration: underline;">
+      content-related PR
+    </a>.
+  </div>
+
+  <main class="main">
+
+    <section id="banner" class="banner section">
+
+       <img src="assets/img/bg.png">
+
+      <div class="container text-center">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2>C-PAC</h2>
+            <p>Configurable Pipeline for the Analysis of Connectomes</p>
+            <a href="https://github.com/FCP-INDI/C-PAC" class="btn">see the code</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <div id="paragraphsContent"></div> 
+    <center>
+      <div id="operationsContent"></div> 
+    </center>
+    <div id="listContent"></div>
+
+  </main>
+
+  <div class="footer">
+  © Copyright 2025 C-PAC Team
+  </div>
+
+</body>
+
+</html>

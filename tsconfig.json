@@ -1,8 +1,30 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
-    "noEmit": true,
-    "isolatedModules": true,
-    "allowImportingTsExtensions": true
-  }
+    "esModuleInterop": true,
+    "outDir": "cpac-docs",
+    "rootDir": "src",
+    "strict": true,
+    "target": "ES2020",
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "paths": {
+      "js-yaml": [
+        "./src/assets/js/types/js-yaml"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "cpac-docs"
+  ]
 }
