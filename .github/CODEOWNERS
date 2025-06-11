@@ -6,6 +6,16 @@
 /.github/ @FCP-INDI/core
 
 # DevOps team
+/dev @FCP-INDI/devops
+/eslint.config.js @FCP-INDI/devops
+/.gitignore @FCP-INDI/devops
+/.markdownlint.yaml @FCP-INDI/devops
+/package.json @FCP-INDI/devops
+/.pnp* @FCP-INDI/devops
 /.pre-commit-config.yaml @FCP-INDI/devops
+/tsconfig.json @FCP-INDI/devops
+/vite.config.js @FCP-INDI/devops
+/.yarn* @FCP-INDI/devops
+/yarn.lock @FCP-INDI/devops
 
 # see https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#:~:text=apps/github%20%40doctocat-,CODEOWNERS%20and%20branch%20protection,-Repository%20owners%20can for more info on setting up CODEOWNERS

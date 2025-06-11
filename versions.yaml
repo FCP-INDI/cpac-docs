@@ -1,0 +1,6 @@
+# this is a C-PAC Docs content file 
+
+meta:
+  title: C-PAC Documentation Versions
+  subtitle: false
+grid: !include ./versions.json

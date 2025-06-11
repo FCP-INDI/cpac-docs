@@ -4,7 +4,9 @@
 ci:
   skip:
     - yarn-update-installation
+    - check-types
     - lint
+    - format
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -41,21 +43,9 @@ repos:
 
       - id: check-types
         name: Type Check
-        entry: yarn check-ts
-        language: node
+        entry: bash -c "node .yarn/releases/yarn-*.cjs install && node .yarn/releases/yarn-*.cjs check-ts"
+        language: system
         types: [ts]
-        additional_dependencies:
-          - eslint
-          - "@eslint/js"
-          - eslint-plugin-typescript
-          - globals
-          - jiti
-          - "@tsconfig/recommended"
-          - typescript
-          - typescript-eslint
-          - "@typescript-eslint/eslint-plugin"
-          - "@typescript-eslint/parser"
-          - yarn
         require_serial: true
 
       - id: lint
@@ -96,22 +86,11 @@ repos:
           - "@typescript-eslint/parser"
           - yarn
         require_serial: true
-
-      - id: compile-ts
-        name: Compile TypeScript
-        entry: yarn build
+      - id: update-node-requirements
+        name: Update Node requirements in CONTRIBUTING.md
+        entry: dev/update-node-requirements.js
         language: node
-        types: [ts]
+        files: ^package\.json$|^CONTRIBUTING\.md$
         additional_dependencies:
-          - eslint
-          - "@eslint/js"
-          - eslint-plugin-typescript
-          - globals
-          - jiti
-          - "@tsconfig/recommended"
-          - typescript
-          - typescript-eslint
-          - "@typescript-eslint/eslint-plugin"
-          - "@typescript-eslint/parser"
-          - yarn
-        require_serial: true
+          - fs
+          - path
