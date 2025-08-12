@@ -372,7 +372,8 @@ dropdown li {
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   padding: 1rem;
-  background-color: var(--background-color);
+  /*background-color: var(--background-color);*/
+  background-color: yellow;
   max-width: 50%;
   max-height: 50%;
   margin-left: auto;
