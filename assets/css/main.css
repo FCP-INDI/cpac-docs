@@ -372,7 +372,8 @@ dropdown li {
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   padding: 1rem;
-  background-color: var(--background-color);
+  /*background-color: var(--background-color);*/
+  background-color: yellow;
   max-width: 50%;
   max-height: 50%;
   margin-left: auto;
@@ -388,6 +389,16 @@ dropdown li {
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.2s, background-color 0.2s;
+}
+
+/* When there are exactly 2 grid items */
+.grid:has(.grid-item:nth-child(2):last-child) .grid-item:nth-child(2) {
+  grid-column: 3;
+}
+
+/* Make text pink when only 2 items */
+.grid:has(.grid-item:nth-child(2):last-child) {
+  color: pink;
 }
 
 .grid-item:hover {
