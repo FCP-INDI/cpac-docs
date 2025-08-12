@@ -390,9 +390,14 @@ dropdown li {
   transition: transform 0.2s, background-color 0.2s;
 }
 
-/* Only if there are exactly two grid items */
+/* When there are exactly 2 grid items */
 .grid:has(.grid-item:nth-child(2):last-child) .grid-item:nth-child(2) {
   grid-column: 3;
+}
+
+/* Make text pink when only 2 items */
+.grid:has(.grid-item:nth-child(2):last-child) {
+  color: pink;
 }
 
 .grid-item:hover {
