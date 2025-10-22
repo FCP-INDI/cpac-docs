@@ -1,5 +1,6 @@
 (function () {
   "use strict";
+  const headingIds = new Set();
 
   function toggleScrolled() {
     const b = document.querySelector("body");
@@ -62,6 +63,18 @@
 
         const heading = document.createElement(headingTag);
         heading.textContent = item.paragraph;
+        let headingId = encodeURIComponent(heading.textContent.toLowerCase().replaceAll(" ", "-"));
+        if (headingIds.has(headingId)) {
+          let suffix = 1;
+          let newHeadingId = `${headingId}-${suffix}`;
+          while (headingIds.has(newHeadingId)) {
+            suffix += 1;
+            newHeadingId = `${headingId}-${suffix}`;
+          };
+          headingId = newHeadingId;
+        };
+        headingIds.add(headingId);
+        heading.id = headingId;
         section.appendChild(heading);
       }
 
@@ -133,8 +146,16 @@
     }
   }
 
+  function updateHeaderHeight() {
+    const header = document.querySelector('header');
+    const headerHeight = header.offsetHeight;
+    document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+  }
+
   window.addEventListener("load", () => {
     toggleScrolled();
     loadYAML("../assets/content/pages/use/use.yaml");
+    updateHeaderHeight();
   });
+  window.addEventListener('resize', updateHeaderHeight);
 })();
