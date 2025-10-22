@@ -5,11 +5,9 @@ import { createHeaderNavDiv } from './header.js';
 import { AsyncElementCallback, ElementCallback, GridData, ParagraphsList, trueIfMissing, YamlData } from './types/types.js';
 import { urlExistsWithoutRedirect } from './utils.js';
 import { loadYaml } from './yaml.js';
+import type { HLJSApi } from 'highlight.js';
 
-declare const hljs: {
-  highlightElement: (element: HTMLElement) => void;
-  highlightAll: () => void;
-} | undefined;
+declare const hljs: HLJSApi;
 
 function titleCase(title: string): string {
   return title.charAt(0).toUpperCase() + title.slice(1);
