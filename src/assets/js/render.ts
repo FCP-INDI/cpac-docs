@@ -162,7 +162,7 @@ function readYAMLparagraphs(paragraphs: ParagraphsList, container: HTMLElement, 
     if (typeof item === "object") {
       if ("paragraph" in item && item.paragraph) {
         const heading = document.createElement(isTopLevel ? "h6" : "h6");
-        heading.textContent = item.paragraph;
+        heading.innerHTML = item.paragraph;
 
         section.appendChild(heading);
       }

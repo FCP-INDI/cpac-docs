@@ -138,7 +138,15 @@ import { readCodeblocks } from './utils';
 
   window.addEventListener("load", () => {
     toggleScrolled();
-    loadYAML("../assets/content/pages/use/use.yaml");
+    loadYAML("../assets/content/pages/use/use.yaml").then(() => {
+      // Scroll to hash after YAML is loaded
+      if (window.location.hash) {
+        setTimeout(() => {
+          const element = document.getElementById(window.location.hash.substring(1));
+          if (element) element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
     updateHeaderHeight();
     Prism.highlightAll();
   });
