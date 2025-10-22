@@ -6,6 +6,10 @@ import { AsyncElementCallback, ElementCallback, GridData, ParagraphsList, trueIf
 import { urlExistsWithoutRedirect } from './utils.js';
 import { loadYaml } from './yaml.js';
 
+declare const hljs: {
+  highlightElement: (element: HTMLElement) => void;
+  highlightAll: () => void;
+} | undefined;
 
 function titleCase(title: string): string {
   return title.charAt(0).toUpperCase() + title.slice(1);
@@ -153,6 +157,20 @@ function getSection(filename: URL | string): string {
   return index ? pathParts[index] : "";
 }
 
+function renderCodeBlock(code: string, language: string = ''): HTMLElement {
+  const pre = document.createElement("pre");
+  const codeElement = document.createElement("code");
+  
+  if (language) {
+    codeElement.classList.add(`language-${language}`);
+  }
+  
+  codeElement.textContent = code;
+  pre.appendChild(codeElement);
+  
+  return pre;
+}
+
 function readYAMLparagraphs(paragraphs: ParagraphsList, container: HTMLElement, isTopLevel: boolean = false) {
   paragraphs.forEach(item => {
     const section = document.createElement("div");
@@ -185,6 +203,20 @@ function readYAMLparagraphs(paragraphs: ParagraphsList, container: HTMLElement, 
         readYAMLparagraphs(item.subparagraphs, subContainer, false);
         section.appendChild(subContainer);
       }
+
+      if ("code" in item && item.code) {
+        const codeBlock = renderCodeBlock(
+          item.code,
+          "language" in item && typeof item.language === "string" ? item.language : ""
+        );
+        codeBlock.classList.add("paragraph-code-block");
+        section.appendChild(codeBlock);
+      }
+    }
+    if (typeof hljs !== 'undefined') {
+      section.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block as HTMLElement);
+      });
     }
     container.appendChild(section);
   });
@@ -378,7 +410,29 @@ async function populateFooter(yamlData: YamlData, container: HTMLElement): Promi
 const customElementRegistry = window.customElements;
 customElementRegistry.define("under-construction", UnderConstruction);
 
+function loadHighlightJS(): void {
+  const head = document.head;
+  
+  // Check if already loaded
+  if (document.querySelector('link[href*="highlight.js"]')) {
+    return;
+  }
+  
+  // Inject CSS
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css';
+  head.appendChild(link);
+  
+  // Inject JS
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js';
+  script.async = true;
+  head.appendChild(script);
+}
+
 window.addEventListener("load", () => {
+  loadHighlightJS();
   toggleScrolled();
   populatePage();
 });
