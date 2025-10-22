@@ -1,13 +1,14 @@
 "use strict";
 // Edit the TypeScript file, not the compiled JavaScript file.
 
-import { createHeaderNavDiv } from './header.js';
-import { AsyncElementCallback, ElementCallback, GridData, ParagraphsList, trueIfMissing, YamlData } from './types/types.js';
-import { urlExistsWithoutRedirect } from './utils.js';
-import { loadYaml } from './yaml.js';
-import type { HLJSApi } from 'highlight.js';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-yaml';
 
-declare const hljs: HLJSApi;
+import { createHeaderNavDiv } from './header';
+import { AsyncElementCallback, ElementCallback, GridData, ParagraphsList, trueIfMissing, YamlData } from './types/types';
+import { readCodeblocks, urlExistsWithoutRedirect } from './utils';
+import { loadYaml } from './yaml';
 
 function titleCase(title: string): string {
   return title.charAt(0).toUpperCase() + title.slice(1);
@@ -95,7 +96,6 @@ function constructUrl(dataId: string, ext: string = "yaml", supersection: string
           }
       }
   }
-  console.log(project_slug, pathname);
   if (version === "versions" || version === "index.html") {
       version = "";
   }
@@ -155,20 +155,6 @@ function getSection(filename: URL | string): string {
   return index ? pathParts[index] : "";
 }
 
-function renderCodeBlock(code: string, language: string = ''): HTMLElement {
-  const pre = document.createElement("pre");
-  const codeElement = document.createElement("code");
-  
-  if (language) {
-    codeElement.classList.add(`language-${language}`);
-  }
-  
-  codeElement.textContent = code;
-  pre.appendChild(codeElement);
-  
-  return pre;
-}
-
 function readYAMLparagraphs(paragraphs: ParagraphsList, container: HTMLElement, isTopLevel: boolean = false) {
   paragraphs.forEach(item => {
     const section = document.createElement("div");
@@ -202,22 +188,19 @@ function readYAMLparagraphs(paragraphs: ParagraphsList, container: HTMLElement, 
         section.appendChild(subContainer);
       }
 
-      if ("code" in item && item.code) {
-        const codeBlock = renderCodeBlock(
-          item.code,
-          "language" in item && typeof item.language === "string" ? item.language : ""
-        );
-        codeBlock.classList.add("paragraph-code-block");
-        section.appendChild(codeBlock);
+      if ("codeblocks" in item && Array.isArray(item.codeblocks)) {
+        readCodeblocks(item, section);
       }
-    }
-    if (typeof hljs !== 'undefined') {
-      section.querySelectorAll('pre code').forEach((block) => {
-        hljs.highlightElement(block as HTMLElement);
-      });
     }
     container.appendChild(section);
   });
+
+  // Add highlighting for inline code blocks
+  if (Prism) {
+    setTimeout(() => {
+      (Prism).highlightAll();
+    }, 0);
+  }
 }
 
 function checkForDom(parent: HTMLElement | null, sibling: HTMLElement | null): HTMLElement {
@@ -408,29 +391,8 @@ async function populateFooter(yamlData: YamlData, container: HTMLElement): Promi
 const customElementRegistry = window.customElements;
 customElementRegistry.define("under-construction", UnderConstruction);
 
-function loadHighlightJS(): void {
-  const head = document.head;
-  
-  // Check if already loaded
-  if (document.querySelector('link[href*="highlight.js"]')) {
-    return;
-  }
-  
-  // Inject CSS
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css';
-  head.appendChild(link);
-  
-  // Inject JS
-  const script = document.createElement('script');
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js';
-  script.async = true;
-  head.appendChild(script);
-}
-
 window.addEventListener("load", () => {
-  loadHighlightJS();
   toggleScrolled();
   populatePage();
+  Prism.highlightAll();
 });

@@ -17,16 +17,20 @@ type _ParagraphsData = {
   paragraph?: _ParagraphData;
   paragraphs?: _ParagraphsData;
   subparagraphs?: _ParagraphsData;
-};
+} | CodeBlocksData;
+
+export type CodeBlocksData = {
+  codeblocks: _CodeBlock[] | string[];
+}
 
 type _ParagraphData = string;
 
 type _DetailsData = string[];
 
 interface _CodeBlock {
-  code?: string;
+  code: string;
   language?: string;
-}
+};
 
 export type GridData = {
   page: string;
