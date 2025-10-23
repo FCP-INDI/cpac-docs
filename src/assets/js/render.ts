@@ -2,6 +2,7 @@
 // Edit the TypeScript file, not the compiled JavaScript file.
 
 import Prism from 'prismjs';
+import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-yaml';
 
