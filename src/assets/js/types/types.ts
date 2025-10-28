@@ -17,18 +17,27 @@ type _ParagraphsData = {
   paragraph?: _ParagraphData;
   paragraphs?: _ParagraphsData;
   subparagraphs?: _ParagraphsData;
-};
+} | CodeBlocksData;
+
+export type CodeBlocksData = {
+  codeblocks: _CodeBlock[] | string[];
+}
 
 type _ParagraphData = string;
 
 type _DetailsData = string[];
+
+interface _CodeBlock {
+  code: string;
+  language?: string;
+};
 
 export type GridData = {
   page: string;
   image?: string | URL;
 };
 
-export type ParagraphsList = (_ParagraphData | _ParagraphsData | _DetailsData)[];
+export type ParagraphsList = (_ParagraphData | _ParagraphsData | _DetailsData | _CodeBlock)[];
 
 export type YamlData = {
   meta?: _MetaData;

@@ -145,7 +145,7 @@ paragraphs:
           - Parameters are grouped by processing modules, such as anatomical_preproc.
           - You can fine-tune parameters to suit your dataset’s quality or your scientific questions.
           - It's best practice to document each version of your pipeline YAML to ensure reproducibility and clarity in group comparisons.
-          - Example: Disable slice-timing correction -
+          - "Example: Disable slice-timing correction -"
         codeblocks:
           - |
               functional_preproc:
