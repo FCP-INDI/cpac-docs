@@ -9,10 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 // Edit the TypeScript file, not the compiled JavaScript file.
-import { createHeaderNavDiv } from './header.js';
-import { trueIfMissing } from './types/types.js';
-import { urlExistsWithoutRedirect } from './utils.js';
-import { loadYaml } from './yaml.js';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-yaml';
+import { createHeaderNavDiv } from './header';
+import { trueIfMissing } from './types/types';
+import { readCodeblocks, urlExistsWithoutRedirect } from './utils';
+import { loadYaml } from './yaml';
 function titleCase(title) {
     return title.charAt(0).toUpperCase() + title.slice(1);
 }
@@ -95,7 +99,6 @@ function constructUrl(dataId, ext = "yaml", supersection = null, subsection = nu
             }
         }
     }
-    console.log(project_slug, pathname);
     if (version === "versions" || version === "index.html") {
         version = "";
     }
@@ -164,7 +167,7 @@ function readYAMLparagraphs(paragraphs, container, isTopLevel = false) {
         if (typeof item === "object") {
             if ("paragraph" in item && item.paragraph) {
                 const heading = document.createElement(isTopLevel ? "h6" : "h6");
-                heading.textContent = item.paragraph;
+                heading.innerHTML = item.paragraph;
                 section.appendChild(heading);
             }
             if ("details" in item && Array.isArray(item.details)) {
@@ -184,9 +187,18 @@ function readYAMLparagraphs(paragraphs, container, isTopLevel = false) {
                 readYAMLparagraphs(item.subparagraphs, subContainer, false);
                 section.appendChild(subContainer);
             }
+            if ("codeblocks" in item && Array.isArray(item.codeblocks)) {
+                readCodeblocks(item, section);
+            }
         }
         container.appendChild(section);
     });
+    // Add highlighting for inline code blocks
+    if (Prism) {
+        setTimeout(() => {
+            (Prism).highlightAll();
+        }, 0);
+    }
 }
 function checkForDom(parent, sibling) {
     // sibling takes precedence
@@ -375,4 +387,5 @@ customElementRegistry.define("under-construction", UnderConstruction);
 window.addEventListener("load", () => {
     toggleScrolled();
     populatePage();
+    Prism.highlightAll();
 });

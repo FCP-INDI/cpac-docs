@@ -10,6 +10,6 @@ grid:
   - page: tutorial4
   - page: tutorial5
   - page: tutorial6
-  - page: tutorial7
+  - page: custom-python-dependencies
   - page: tutorial8
   - page: tutorial9

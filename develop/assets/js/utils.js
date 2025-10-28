@@ -28,3 +28,27 @@ export function urlExistsWithoutRedirect(url) {
         }
     });
 }
+// Helper to replace tree chars with spaces
+function sanitizeTreeChars(text) {
+    // Replace │ and ├── and └── with spaces to indent properly in YAML
+    return text
+        .replace(/│/g, "    ") // vertical bar -> 4 spaces
+        .replace(/├──/g, "    ") // branch -> 4 spaces
+        .replace(/└──/g, "    "); // end branch -> 4 spaces
+}
+export function readCodeblocks(item, section) {
+    const codeContainer = document.createElement("div");
+    codeContainer.classList.add("paragraph-codeblock");
+    item.codeblocks.forEach((block) => {
+        const pre = document.createElement("pre");
+        const codeElem = document.createElement("code");
+        // Support both old (string) and new (object) syntax
+        const code = typeof block === "string" ? block : block.code;
+        const language = typeof block === "string" ? "yaml" : (block.language || "yaml");
+        codeElem.className = `language-${language}`;
+        codeElem.textContent = sanitizeTreeChars(code);
+        pre.appendChild(codeElem);
+        codeContainer.appendChild(pre);
+    });
+    section.appendChild(codeContainer);
+}
