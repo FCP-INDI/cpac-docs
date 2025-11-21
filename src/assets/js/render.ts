@@ -174,7 +174,7 @@ function readYAMLparagraphs(paragraphs: ParagraphsList, container: HTMLElement, 
 
         item.details.forEach(detailText => {
           const li = document.createElement("li");
-          li.textContent = detailText || "(detail)";
+          li.innerHTML = detailText || "(detail)";
           li.classList.add("paragraph-detail");
           ul.appendChild(li);
         });
