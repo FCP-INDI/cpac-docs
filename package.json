@@ -45,6 +45,7 @@
     "watch": "chokidar 'src/**/*' -c 'yarn copy-and-build'"
   },
   "dependencies": {
+    "glob": "^13.0.0",
     "js-yaml": "^4.1.0",
     "prismjs": "^1.30.0"
   }
